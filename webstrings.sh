@@ -6,7 +6,7 @@ if [ $# -eq 0 ]
       exit
   fi
 
-
+# Shift query can be installed with ` npm i shift-query-cli `
 curl $1 | shift-query 'IdentifierExpression, LiteralStringExpression' | tail -n+2 | jq -r '.[] | .value, .name' | grep -v '^null$' | sed '/^.\{,3\}$/d' | awk '!x[$0]++'
 # shift-query translates the JS into AST nodes - https://jsoverson.github.io/shift-query-demo/ and we select IdentifierExpressions, which are variable / function names, and LiteralStringExpressions, which are all strings
 # tail because shift-query returns bool before JSON
